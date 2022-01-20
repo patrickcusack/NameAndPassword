@@ -88,3 +88,11 @@ An good way to test your plugin is to create a right in the Policy Database that
 
 
 NOTE: The WWDC 2006 build of Mac OS X 10.5 likely won't authenticate properly.  But it will allow you to test your SFAuthorizationPluginView.
+
+
+Additional Links
+
+https://stackoverflow.com/questions/21056322/customize-login-screen-mac-osx-sfauthorizationpluginview
+https://docs.jamf.com/jamf-connect/1.18.1/administrator-guide/Modifying_the_loginwindow_Application.html
+https://developer.apple.com/forums/thread/113917
+https://stackoverflow.com/questions/21582995/custom-login-lock-screen-in-os-x-mavericks/21618085#21618085
