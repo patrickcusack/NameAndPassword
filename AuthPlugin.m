@@ -49,14 +49,16 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 */
 
 #import "AuthPlugin.h"
-#import "PCNPLogger.h"
-
+//#import "PCNPLogger.h"
+#import "os/log.h"
 
 @implementation EXAuthPlugin
 
 -(id)mechanism:(AuthorizationMechanismId)mechanismId engineRef:(AuthorizationEngineRef)inEngine
 {
-    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+//    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "mechanism");
+    
 	if (!strcmp(mechanismId, "invoke"))
 	{
 		// for the invoke mechanism return a instance of the AuthPluginMechanism
@@ -71,7 +73,9 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 
 - (OSStatus)invoke
 {
-    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+//    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "invoke");
+    
 	if (mNameAndPassword == nil)
 	{
 		mNameAndPassword = [[EXNameAndPassword alloc] initWithCallbacks: [mPluginRef engineCallback] andEngineRef: mEngineRef];
@@ -87,7 +91,9 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 
 - (void)dealloc
 {
-    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+//    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "dealloc");
+    
 	if (mNameAndPassword)
 	{
 		[mNameAndPassword release];

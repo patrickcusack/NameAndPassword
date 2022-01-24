@@ -49,7 +49,8 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 */
 
 #import "AuthPlugin.h"
-#import "PCNPLogger.h"
+//#import "PCNPLogger.h"
+#import "os/log.h"
 
 /*
 	AuthorizationPluginCreate - The main entry point for a SecurityAgent plugin.
@@ -60,7 +61,8 @@ AuthorizationPluginCreate(const AuthorizationCallbacks *callbacks,
                           AuthorizationPluginRef *outPlugin,
                           const AuthorizationPluginInterface **outPluginInterface)
 {
-    [[PCNPLogger sharedLogger] logInfo:@"AuthorizationPluginCreate"];
+//    [[PCNPLogger sharedLogger] logInfo:@"AuthorizationPluginCreate"];
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "AuthorizationPluginCreate");
     *outPlugin = [[EXAuthPlugin alloc] initWithCallbacks:callbacks pluginInterface:outPluginInterface];
     return noErr;
 }

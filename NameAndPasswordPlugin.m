@@ -50,14 +50,17 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 
 #import "NameAndPasswordPlugin.h"
 #import <Security/AuthorizationTags.h>
-#import "PCNPLogger.h"
+//#import "PCNPLogger.h"
+#import "os/log.h"
 
 @implementation EXNameAndPassword
 
 
 - (void)buttonPressed:(SFButtonType)inButtonType
 {
-    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+//    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "buttonPressed");
     
     NSString *userNameString;
     NSString *passwordString;
@@ -104,7 +107,9 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 
 - (NSView *)firstKeyView
 {
-    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+//    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "firstKeyView");
+    
 	// return the appropriate view depending on whether or not identity and credentials
 	// or just credentials are being asked for
 	if (mUseIPView)
@@ -115,7 +120,8 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 
 - (NSView *)firstResponderView
 {
-    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+//    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "firstResponderView");
     
 	NSView					*view;
 	
@@ -144,7 +150,9 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 
 - (NSView *)lastKeyView
 {
-    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+//    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "lastKeyView");
+    
 	// return the appropriate view depending on whether or not identity and credentials
 	// or just credentials are being asked for
 	if (mUseIPView)
@@ -155,7 +163,9 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 
 - (void)setEnabled:(BOOL)inEnabled
 {
-    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+//    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "setEnabled");
+    
 	// enable or disable the text fields as appropriate
 	[mNameTextField setEnabled: inEnabled];
 	[mIPPasswordSecureTextField setEnabled: inEnabled];
@@ -164,7 +174,9 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 
 - (void)willActivateWithUser:(NSDictionary *)inUserInformation
 {
-    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+//    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "willActivateWithUser");
+    
 	// save the user name and set the name text field
 	mUserName = [[inUserInformation objectForKey: SFAuthorizationPluginViewUserShortNameKey] retain];
 	if (mUserName)
@@ -175,7 +187,9 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 
 - (NSView*)viewForType:(SFViewType)inType
 {
-    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+//    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "viewForType");
+    
 	NSView *view = nil;
     
 	// return the appropriate view for the type of view being requested
@@ -196,7 +210,10 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 // --------------------------------------------------------------------------------
 - (id)initWithCallbacks:(const AuthorizationCallbacks *)callbacks andEngineRef:(AuthorizationEngineRef)engineRef
 {
-    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+//    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "initWithCallbacks");
+    
 	self = [super initWithCallbacks: callbacks andEngineRef: engineRef];
 	if (self)
 	{
@@ -207,7 +224,10 @@ Copyright � 2006 Apple Computer, Inc., All Rights Reserved
 
 - (void)dealloc
 {
-    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+//    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    
+    os_log_with_type(OS_LOG_DEFAULT, OS_LOG_TYPE_DEBUG, "dealloc");
+    
 	[mUserName release];
 	[super dealloc];
 }

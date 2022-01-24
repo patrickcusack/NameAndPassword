@@ -6,6 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <OSLog/OSLog.h>
 #import "PCNPLogger.h"
 
 int main(int argc, const char * argv[]) {
