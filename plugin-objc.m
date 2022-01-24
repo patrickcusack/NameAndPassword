@@ -44,11 +44,12 @@ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
 STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Copyright © 2006 Apple Computer, Inc., All Rights Reserved
+Copyright ï¿½ 2006 Apple Computer, Inc., All Rights Reserved
 
 */
 
 #import "plugin-objc.h"
+#import "PCNPLogger.h"
 
 //Plugin API calls
 OSStatus PluginDestroy(AuthorizationPluginRef inPlugin);
@@ -119,6 +120,8 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (id)initWithCallbacks:(const AuthorizationCallbacks *)callbacks pluginInterface:(const AuthorizationPluginInterface **)interface
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    
 	if ([super init] != nil)
 	{
 		// call backs into the engine
@@ -132,6 +135,7 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (id)setCallbacks:(const AuthorizationCallbacks *)callbacks pluginInterface:(const AuthorizationPluginInterface **)interface
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	assert(mEngineInterface == callbacks);
 	mEngineInterface = (AuthorizationCallbacks *)callbacks;
 	*interface = &mAuthorizationPluginInterface;
@@ -142,6 +146,7 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 // You need to override it to produce all the mechanism your plugin provides
 - (id)mechanism:(AuthorizationMechanismId)mechanismId engineRef:(AuthorizationEngineRef)inEngine
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	// ignore mechanismId, there is only one:
 	return [[EXAuthorizationMechanism alloc] initWithPlugin:self engineRef:inEngine];
 }
@@ -154,12 +159,14 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (id)init
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	[super init];
 	return self;
 }
 
 - (id)initWithPlugin:(EXAuthorizationPlugin *)plugin engineRef:(AuthorizationEngineRef)engine
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	if ([self init] != nil)
 	{
 		// plugin gives us access to plugin callbacks
@@ -173,46 +180,55 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (OSStatus)requestInterrupt
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	return [mPluginRef engineCallback]->RequestInterrupt(mEngineRef);
 }
 
 - (OSStatus)setResult:(AuthorizationResult)inResult
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	return [mPluginRef engineCallback]->SetResult(mEngineRef, inResult);
 }
 
 - (OSStatus)didDeactivate
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	return [mPluginRef engineCallback]->DidDeactivate(mEngineRef);
 }
 
 - (OSStatus)getContext:(AuthorizationString)inKey flags:(AuthorizationContextFlags *)outContextFlags value:(const AuthorizationValue **)outValue
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	return [mPluginRef engineCallback]->GetContextValue(mEngineRef, inKey, outContextFlags, outValue);
 }
 
 - (OSStatus)setContext:(AuthorizationString)inKey flags:(AuthorizationContextFlags)inContextFlags value:(const AuthorizationValue *)inValue
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	return [mPluginRef engineCallback]->SetContextValue(mEngineRef, inKey, inContextFlags, inValue);
 }
 
 - (OSStatus)getHint:(AuthorizationString)inKey value:(const AuthorizationValue **)outValue
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	return [mPluginRef engineCallback]->GetHintValue(mEngineRef, inKey, outValue);
 }
 
 - (OSStatus)setHint:(AuthorizationString)inKey value:(const AuthorizationValue *)inValue
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	return [mPluginRef engineCallback]->SetHintValue(mEngineRef, inKey, inValue);
 }
 
 - (OSStatus)getArguments:(const AuthorizationValueVector **)outArguments
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	return [mPluginRef engineCallback]->GetArguments(mEngineRef, outArguments);
 }
 
 - (OSStatus)getSession:(AuthorizationSessionId *)outSessionId
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	return [mPluginRef engineCallback]->GetSessionId(mEngineRef, outSessionId);
 }
 
@@ -220,11 +236,13 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 - (OSStatus)invoke
 {
 	// put code here
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	return noErr;
 }
 
 - (OSStatus)deactivate
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	return [self didDeactivate];
 }
 
@@ -235,6 +253,8 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (NSData *)hintNSData:(const char *)inKey
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    
 	const AuthorizationValue *authvalue = NULL;
 
 	if ([mPluginRef engineCallback]->GetHintValue(mEngineRef, inKey, &authvalue) 
@@ -246,6 +266,8 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (NSData *)contextNSData:(const char *)inKey
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    
 	const AuthorizationValue *authvalue = NULL;
 	AuthorizationContextFlags authflags;
 
@@ -258,6 +280,7 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (NSString *)contextString:(const char *)inKey
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	NSData *authData = [self contextNSData:inKey];
 	if (authData)
 		return [[[NSString alloc] initWithData:authData encoding:NSUTF8StringEncoding] autorelease];
@@ -266,6 +289,7 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (void)setContextString:(NSString *)value withFlags:(AuthorizationFlags)flags forKey:(const char *)inKey
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	const char *utf8string = [value UTF8String];
 	AuthorizationValue authvalue = { utf8string ? strlen(utf8string) : 0, (char *)utf8string };
 	[mPluginRef engineCallback]->SetContextValue(mEngineRef, inKey, flags, &authvalue);
@@ -273,6 +297,7 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (NSString *)hintString:(const char *)inKey
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	NSData *authData = [self hintNSData:inKey];
 	if (authData)
 		return [[[NSString alloc] initWithData:authData encoding:NSUTF8StringEncoding] autorelease];
@@ -281,6 +306,7 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (void)setHintString:(NSString *)value forKey:(const char *)inKey
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	const char *utf8string = [value UTF8String];
 	AuthorizationValue authvalue = { utf8string ? strlen(utf8string) : 0, (char *)utf8string };
 	[mPluginRef engineCallback]->SetHintValue(mEngineRef, inKey, &authvalue);
@@ -290,6 +316,7 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (BOOL)hintData:(uint8_t*)data withSize:(size_t)size forKey:(const char *)inKey
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	const AuthorizationValue *authvalue = NULL;
 
 	if ([mPluginRef engineCallback]->GetHintValue(mEngineRef, inKey, &authvalue) 
@@ -306,6 +333,7 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (BOOL)contextData:(uint8_t*)data withSize:(size_t)size withFlags:(AuthorizationContextFlags*)flags forKey:(const char *)inKey
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	const AuthorizationValue *authvalue = NULL;
 	AuthorizationContextFlags authflags;
 
@@ -325,6 +353,7 @@ __private_extern__ OSStatus MechanismDestroy(AuthorizationMechanismRef inMechani
 
 - (BOOL)setContextData:(uint8_t*)data withSize:(size_t)size withFlags:(AuthorizationContextFlags)flags forKey:(const char *)inKey
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	AuthorizationValue authvalue = { size, data };
 
 	if ([mPluginRef engineCallback]->SetContextValue(mEngineRef, inKey, flags, &authvalue))

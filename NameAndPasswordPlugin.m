@@ -44,19 +44,21 @@ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
 STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Copyright © 2006 Apple Computer, Inc., All Rights Reserved
+Copyright ï¿½ 2006 Apple Computer, Inc., All Rights Reserved
 
 */
 
 #import "NameAndPasswordPlugin.h"
 #import <Security/AuthorizationTags.h>
-
+#import "PCNPLogger.h"
 
 @implementation EXNameAndPassword
 
 
 - (void)buttonPressed:(SFButtonType)inButtonType
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    
     NSString *userNameString;
     NSString *passwordString;
     
@@ -89,6 +91,7 @@ Copyright © 2006 Apple Computer, Inc., All Rights Reserved
         [self callbacks]->SetContextValue([self engineRef], kAuthorizationEnvironmentUsername, 1, &userNameValue);
         [self callbacks]->SetContextValue([self engineRef], kAuthorizationEnvironmentPassword, 1, &userPasswordValue);
         
+        
         // allow authorization
         [self callbacks]->SetResult([self engineRef], kAuthorizationResultAllow);
     }
@@ -101,6 +104,7 @@ Copyright © 2006 Apple Computer, Inc., All Rights Reserved
 
 - (NSView *)firstKeyView
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	// return the appropriate view depending on whether or not identity and credentials
 	// or just credentials are being asked for
 	if (mUseIPView)
@@ -111,6 +115,8 @@ Copyright © 2006 Apple Computer, Inc., All Rights Reserved
 
 - (NSView *)firstResponderView
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
+    
 	NSView					*view;
 	
 	// return the appropriate view depending on whether or not identity and credentials
@@ -138,6 +144,7 @@ Copyright © 2006 Apple Computer, Inc., All Rights Reserved
 
 - (NSView *)lastKeyView
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	// return the appropriate view depending on whether or not identity and credentials
 	// or just credentials are being asked for
 	if (mUseIPView)
@@ -148,6 +155,7 @@ Copyright © 2006 Apple Computer, Inc., All Rights Reserved
 
 - (void)setEnabled:(BOOL)inEnabled
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	// enable or disable the text fields as appropriate
 	[mNameTextField setEnabled: inEnabled];
 	[mIPPasswordSecureTextField setEnabled: inEnabled];
@@ -156,6 +164,7 @@ Copyright © 2006 Apple Computer, Inc., All Rights Reserved
 
 - (void)willActivateWithUser:(NSDictionary *)inUserInformation
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	// save the user name and set the name text field
 	mUserName = [[inUserInformation objectForKey: SFAuthorizationPluginViewUserShortNameKey] retain];
 	if (mUserName)
@@ -166,6 +175,7 @@ Copyright © 2006 Apple Computer, Inc., All Rights Reserved
 
 - (NSView*)viewForType:(SFViewType)inType
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	NSView *view = nil;
     
 	// return the appropriate view for the type of view being requested
@@ -186,6 +196,7 @@ Copyright © 2006 Apple Computer, Inc., All Rights Reserved
 // --------------------------------------------------------------------------------
 - (id)initWithCallbacks:(const AuthorizationCallbacks *)callbacks andEngineRef:(AuthorizationEngineRef)engineRef
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	self = [super initWithCallbacks: callbacks andEngineRef: engineRef];
 	if (self)
 	{
@@ -196,6 +207,7 @@ Copyright © 2006 Apple Computer, Inc., All Rights Reserved
 
 - (void)dealloc
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	[mUserName release];
 	[super dealloc];
 }

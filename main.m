@@ -44,11 +44,12 @@ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
 STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Copyright © 2006 Apple Computer, Inc., All Rights Reserved
+Copyright ï¿½ 2006 Apple Computer, Inc., All Rights Reserved
 
 */
 
 #import "AuthPlugin.h"
+#import "PCNPLogger.h"
 
 /*
 	AuthorizationPluginCreate - The main entry point for a SecurityAgent plugin.
@@ -59,6 +60,7 @@ AuthorizationPluginCreate(const AuthorizationCallbacks *callbacks,
                           AuthorizationPluginRef *outPlugin,
                           const AuthorizationPluginInterface **outPluginInterface)
 {
+    [[PCNPLogger sharedLogger] logInfo:@"AuthorizationPluginCreate"];
     *outPlugin = [[EXAuthPlugin alloc] initWithCallbacks:callbacks pluginInterface:outPluginInterface];
     return noErr;
 }

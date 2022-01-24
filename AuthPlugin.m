@@ -44,17 +44,19 @@ AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
 STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 
-Copyright © 2006 Apple Computer, Inc., All Rights Reserved
+Copyright ï¿½ 2006 Apple Computer, Inc., All Rights Reserved
 
 */
 
 #import "AuthPlugin.h"
+#import "PCNPLogger.h"
 
 
 @implementation EXAuthPlugin
 
 -(id)mechanism:(AuthorizationMechanismId)mechanismId engineRef:(AuthorizationEngineRef)inEngine
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	if (!strcmp(mechanismId, "invoke"))
 	{
 		// for the invoke mechanism return a instance of the AuthPluginMechanism
@@ -69,6 +71,7 @@ Copyright © 2006 Apple Computer, Inc., All Rights Reserved
 
 - (OSStatus)invoke
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	if (mNameAndPassword == nil)
 	{
 		mNameAndPassword = [[EXNameAndPassword alloc] initWithCallbacks: [mPluginRef engineCallback] andEngineRef: mEngineRef];
@@ -84,6 +87,7 @@ Copyright © 2006 Apple Computer, Inc., All Rights Reserved
 
 - (void)dealloc
 {
+    [[PCNPLogger sharedLogger] logInfo:[NSString stringWithFormat:@"%s %d %s", __FUNCTION__, __LINE__, __FILE__]];
 	if (mNameAndPassword)
 	{
 		[mNameAndPassword release];
